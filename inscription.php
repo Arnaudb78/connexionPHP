@@ -1,15 +1,12 @@
 <?php
-// je déclare la session qui permet au User de naviguer entre plusieurs page et resté connecté
-session_start();
-
 //variable et mot de passe du compte phpmyadmin 
 $admin = 'root';
 $pass = 'root';
 
 //connexion à la DB via PDO
 $bdd = new PDO('mysql:host=localhost;dbname=espace_membres;charset=utf8', $admin, $pass);
-
-if(isset($_POST['pseudo'])){
+//isset vérifie que la variable existe
+if(isset($_POST['envoi'])){
     //je vérifie que les champs pseudo et mdp ne sont pas vide 
     if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
         // on utilise htmlspecialchars pour encoder l'entrée
@@ -32,9 +29,8 @@ if(isset($_POST['pseudo'])){
             $_SESSION['mdp'] = $mdp;
             // je fetch pour tout récupérer et je cible le champs ID
             $_SESSION['id'] = $recupUser->fetch()['id']; 
+            header('Location: home.php');
         }
-
-        echo $_SESSION['id'];
 
       
 
@@ -52,15 +48,15 @@ if(isset($_POST['pseudo'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Inscription</title>
 </head>
-<body align="center">
-        <form action="" method="post">
-
-            <input type="text" name="pseudo">
+<body>
+        <form action="" method="post" class='form'>
+            <h2>Inscrivez-vous :</h2>
+            <input type="text" name="pseudo" placeholder='Créez votre Pseudo' class='form-input'>
             <br/>
-            <input type="password" name="mdp">
+            <input type="password" name="mdp" placeholder='Créez votre Mot de passe' class='form-input'>
 
             <br/><br/>
-            <input type="submit" name="envoi">
+            <input type="submit" name="envoi" class='form-btn'>
 
         </form>
 </body>

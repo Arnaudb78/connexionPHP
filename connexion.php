@@ -1,11 +1,10 @@
 <?php
-session_start();
 
 $admin = 'root';
 $pass = 'root';
 
 $bdd = new PDO('mysql:host=localhost;dbname=espace_membres;charset=utf8;', $admin, $pass);
-if(isset($_POST['envoi'])){
+if(isset($_POST['valider'])){
     if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
         $pseudo = htmlspecialchars($_POST['pseudo']);
         $mdp = sha1($_POST['mdp']);
@@ -17,7 +16,7 @@ if(isset($_POST['envoi'])){
             $_SESSION['pseudo'] = $pseudo;
             $_SESSION['mdp'] = $mdp;
             $_SESSION['id'] = $recupUser->fetch()['id'];
-            header('Location: index.php');
+            header('Location: home.php');
 
         }else {
             echo "Votre pseudo ou mot de passe est incorrect..";
@@ -38,13 +37,15 @@ if(isset($_POST['envoi'])){
     <title>Connexion</title>
 </head>
 <body>
-    <form method="POST" action="" align='center'>
+    
+    <form method="POST" action="" class='form'>
 
-        <input type="text" name='pseudo'>
+        <h2>Connectez-vous :</h2>
+        <input type="text" name='pseudo' placeholder='Votre pseudo' class='form-input'>
         <br/>
-        <input type="password" name='mdp'>
+        <input type="password" name='mdp' placeholder='Votre mot de passe' class='form-input'>
         <br/><br/>
-        <input type="submit" name='envoi'>
+        <input type="submit" name='valider' class='form-btn'>
 
     </form>
 </body>
